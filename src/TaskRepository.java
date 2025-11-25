@@ -88,9 +88,16 @@ public class TaskRepository {
     public void getById(int id) {
 
         List<Task> tasks = ConvertsToArray(); //שליפה מה json
-
         for (Task task : tasks) // מחפש את המשימה לפי Id
             if (task.getId() == id) // אם מצא - מדפיס
-                task.toString();
+                System.out.println(task.toString());
+    }
+
+    // מדפיסה את כל המשימות
+    public void listAll() {
+
+        List<Task> tasks = ConvertsToArray(); // שליפה מה-json
+        for (Task task : tasks) // עוברים בלולאה ומדפיסים
+            System.out.println(task.toString());
     }
 }
