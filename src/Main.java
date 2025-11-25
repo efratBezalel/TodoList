@@ -1,14 +1,22 @@
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    Scanner in = new Scanner(System.in);
+
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int a = 1;
 
+        try {
+            TaskRepository.initialId(); //  קריאה לאתחול המונה הסטטי
+        }
+        catch (IOException e) {
+            System.err.println(" שגיאה באתחול ה id" + e.getMessage());
+        }
+
+        int a = 1;
         while(a != 0) {
 
             System.out.println("--- תפריט פעולות ---");
@@ -29,18 +37,15 @@ public class Main {
 
             switch (a) {
                 case 1: TaskRepository.addTask(); break;
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-
-                    break;
-                case 6:
-                case 7:
-
-                    break;
-
+                case 2: break;
+                case 3: break;
+                case 4: break;
+                case 5: break;
+                case 6: break;
+                case 7: break;
+                case 8: break;
                 default:
+                    System.out.println("");
 
                     break;
             }

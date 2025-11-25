@@ -22,7 +22,7 @@ public class TaskRepository {
             return tasks != null ? tasks : new ArrayList<>();
         }
         catch (IOException e) {
-            System.err.println("error reading file: " + e.getMessage());
+            System.err.println("error reading file1111: " + e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -42,9 +42,9 @@ public class TaskRepository {
         List<Task> tasks = ConvertsToArray(); //שליפה מה json
 
         System.out.println("להוספת משימה חדשה, הזן כותרת:");
-        String ttl = in.next();
+        String ttl = in.nextLine();
         System.out.println("הזן תאור משימה:");
-        String dsc = in.next();
+        String dsc = in.nextLine();
 
         Task t = new Task(ttl, dsc); // קריאה לבנאי
         tasks.add(t); //  והוספה
@@ -151,5 +151,27 @@ public class TaskRepository {
         catch (Exception e) {
             System.err.println(" שגיאה" + e.getMessage());
         }
+    }
+
+    // פונקציית עזר להגדרת ה id ללא חזרות
+    private static int maxId = 0;
+    public static int getNextId() {
+        return ++ maxId;
+    }
+
+    // פונקצייה שנקראת בתחילת הפרויקט ומאתחלת את ה id
+    public static void initialId() throws IOException {
+        List<Task> tasks = ConvertsToArray();
+        if (tasks != null && !tasks.isEmpty()) {
+            int max = tasks.stream()
+                    .mapToInt(Task::getId)
+                    .max() // מוצא את המקסימום
+                    .orElse(0); // אם הרשימה ריקה, מחזיר 0
+
+            maxId = max;
+        }
+        else
+            maxId = 0;
+
     }
 }

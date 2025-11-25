@@ -2,21 +2,22 @@ import java.util.List;
 
 public class Task implements Comparable<Task>{
 
-    private static int nextId = 1; // משתנה סטטי
     private int id;
     private String title;
     private String description;
     private Status status;
 
     public Task(String title, String description) {
-        this.id = nextId++;
+        this.id = TaskRepository.getNextId();;
         this.title = title;
         this.description = description;
         this.status = Status.NEW;
     }
-
-    public static int getNextId() {
-        return nextId;
+    public Task(int id, String title, String description, Status status) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
     }
 
     public int getId() {
