@@ -1,6 +1,7 @@
 import java.util.List;
 import java.util.Collections;
 import java.util.stream.Collectors;
+import java.io.IOException;
 
 public class TaskService {
 
@@ -10,16 +11,23 @@ public class TaskService {
     }
 
     // פונקציית מיון לפי הסטטוס
-    public List<Task> getSortedTasks() {
-
-        List<Task> tasks = TaskRepository.ConvertsToArray(); // שליפה מ JSON
-        Collections.sort(tasks);
-        return tasks;
+    public void getSortedTasks() {
+        try {
+            List<Task> tasks = TaskRepository.ConvertsToArray(); // שליפה מ JSON
+            Collections.sort(tasks);
+//            return tasks;
+        }
+        catch (IOException e) {
+            System.err.println(" שגיאה" + e.getMessage());
+        }
+        catch (Exception e) {
+            System.err.println(" שגיאה" + e.getMessage());
+        }
     }
 
 
     public void searchTask(String txt) {
-
+        try {
         List<Task> tasks = TaskRepository.ConvertsToArray(); //שליפה מה json
 
         // מבצע סינון ומחזיר רק את המשימות שעומדות בקריטריונים
@@ -31,13 +39,20 @@ public class TaskService {
                     )
                     .collect(Collectors.toList());
 
-                System.out.println("--- רשימת משימות ---"); // הדפסת המשימות
-                for (Task task : tasks) { // עוברת בלולאה על המשימות ושולחת לטוסטרינג
+                for (Task task : results) { // עוברת בלולאה על המשימות ושולחת לטוסטרינג
                     System.out.println(task.toString());
                 }
                 System.out.println("----------------------");
             }
         else
             System.out.println("לא נמצאה מחרוזת מתאימה");
+        }
+
+        catch (IOException e) {
+            System.err.println(" שגיאה" + e.getMessage());
+        }
+        catch (Exception e) {
+            System.err.println(" שגיאה" + e.getMessage());
+        }
     }
 }
