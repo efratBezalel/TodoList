@@ -12,7 +12,7 @@ public class TaskRepository {
 
 
 // פונקצית עזר שממירה את קובץ ה json ומחזירה אותו כמערך
-    private List<Task> ConvertsToArray() {
+    public List<Task> ConvertsToArray() {
         try (FileReader reader = new FileReader(FILE_PATH)) {
             Type listType = new TypeToken<ArrayList<Task>>(){}.getType();
             List<Task> tasks = gson.fromJson(reader, listType);
@@ -26,7 +26,7 @@ public class TaskRepository {
     }
 
 //    פונקצית עזר שממירה את המערך לקובץ json ןמכניסה אותו לקובץ
-    private void ConvertsToJson(List<Task> tasks) {
+    public void ConvertsToJson(List<Task> tasks) {
         try (FileWriter writer = new FileWriter(FILE_PATH)) {
             gson.toJson(tasks, writer);
         } catch (IOException e) {
