@@ -83,4 +83,14 @@ public class TaskRepository {
             System.out.println(id + " לא נמצא ");
     }
 
+
+    // פונקצית הדפסה לפי id
+    public void getById(int id) {
+
+        List<Task> tasks = ConvertsToArray(); //שליפה מה json
+
+        for (Task task : tasks) // מחפש את המשימה לפי Id
+            if (task.getId() == id) // אם מצא - מדפיס
+                task.toString();
+    }
 }
