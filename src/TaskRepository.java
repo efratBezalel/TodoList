@@ -1,6 +1,8 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import javax.crypto.spec.PSource;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -42,9 +44,9 @@ public class TaskRepository {
         List<Task> tasks = ConvertsToArray(); //שליפה מה json
 
         System.out.println("להוספת משימה חדשה, הזן כותרת:");
-        String ttl = in.nextLine();
+        String ttl = in.next();
         System.out.println("הזן תאור משימה:");
-        String dsc = in.nextLine();
+        String dsc = in.next();
 
         Task t = new Task(ttl, dsc); // קריאה לבנאי
         tasks.add(t); //  והוספה
@@ -60,7 +62,7 @@ public class TaskRepository {
     }
 
     // פונקצית עדכון לפי Id
-    public static void updateById(int id, String title, String description, Status status) {
+    public static void updateById(int id, String ttl, String dsc, Status s) {
         try{
         List<Task> tasks = ConvertsToArray(); //שליפה מה json
         boolean ok = false;
@@ -69,11 +71,12 @@ public class TaskRepository {
             if (t.getId() == id) {
                 // האיפים הפנימים הם לבדיקה האם הכניסו ערך לעדכון או לא
                 // (אולי לא רצו לעדכן ולא שלחו בערך כלום).
-                if(description != "")
-                    t.setDescription(description);
-                if(title != "")
-                    t.setTitle(description);
-                t.setStatus(status);
+                if(!dsc.equals("לא"))
+                    t.setDescription(dsc);
+                if(!ttl.equals("לא"))
+                    t.setTitle(ttl);
+                if (s != null)
+                t.setStatus(s);
                 ok = true;
                 break;
             }
@@ -92,6 +95,23 @@ public class TaskRepository {
         catch (Exception e) {
             System.err.println(" שגיאה" + e.getMessage());
         }
+    }
+    // פונקצית עזר שקולטת נתונים מהמשתמש ובונה משימה
+    public static void updtTask(){
+
+        System.out.println("הזן id אותו תרצה לשנות");
+        int id = in.nextInt();
+        System.out.println("אם ברצונך לשנות את הכותרת כיתבי אותה כאן ולא כתבי לא:");
+        String ttl = in.next();
+        System.out.println("אם ברצונך לשנות את התאור כיתבי אותה כאן ולא כתבי לא:");
+        String dsc = in.next();
+        System.out.println("האם ברצונך לשנות את סטטוס הפעולה?");
+        System.out.println("לשינוי הקש 1, להשארת המצב הקיים הקש 0");
+        int status = in.nextInt();
+        Status s = null;
+        if(status == 1)
+            s = getStatus();
+        updateById(id, ttl, dsc, s);
     }
 
     // פונקצית מחיקה לפי id
@@ -173,5 +193,29 @@ public class TaskRepository {
         else
             maxId = 0;
 
+    }
+
+    //פונקציה לבחירת סטטוס לפי מספר שמזינים
+    public static Status getStatus(){
+        System.out.println("להגדרת משימה כ- NEW הקש 1");
+        System.out.println("להגדרת משימה כ- IN_PROGRESS הקש 2");
+        System.out.println("להגדרת משימה כ- DONE הקש 3");
+        System.out.println("הקש את המספר הרצוי:");
+        int a = in.nextInt();
+
+        while (a != 1 || a != 2 || a != 3)
+            switch (a) {
+                case (1):
+                    return Status.NEW;
+                case (2):
+                    return Status.IN_PROGRESS;
+                case (3):
+                    return Status.DONE;
+                default:
+                    System.out.println("מספר לא תקין הכנס מספר בין 1 ל 3");
+                    a = in.nextInt();
+                    break;
+            }
+        return Status.NEW;
     }
 }
