@@ -62,13 +62,25 @@ public class TaskRepository {
             }
         }
 
-        if (ok) {
-            ConvertsToJson(tasks); // אם מצא מעדכן לקובץ
+        if (ok) { // אם מצא id מעדכן לקובץ
+            ConvertsToJson(tasks);
             System.out.println(id + " found id");
         }
          else
             System.out.println(id + " not found id");
     }
 
+    // פונקצית מחיקה לפי id
+    public void deleteById(int id) {
+
+        List<Task> tasks = ConvertsToArray(); //שליפה מה json
+        boolean deleted = tasks.removeIf(task -> task.getId() == id);// מחיקת ה Id המרשימה
+
+        if (deleted) { // אם מחק את המשימה
+            ConvertsToJson(tasks); // מעדכן את הקובץ
+            System.out.println(id + "נמחק ");
+        } else
+            System.out.println(id + " לא נמצא ");
+    }
 
 }
