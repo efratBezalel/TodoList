@@ -12,7 +12,7 @@ public class TaskRepository {
 
 
 // פונקצית עזר שממירה את קובץ ה json ומחזירה אותו כמערך
-    public List<Task> ConvertsToArray() {
+    public static List<Task> ConvertsToArray() {
         try (FileReader reader = new FileReader(FILE_PATH)) {
             Type listType = new TypeToken<ArrayList<Task>>(){}.getType();
             List<Task> tasks = gson.fromJson(reader, listType);
@@ -43,7 +43,7 @@ public class TaskRepository {
     }
 
     // פונקצית עדכון לפי Id
-    public void updateById(int id, String title, String description, Status status) {
+    public static void updateById(int id, String title, String description, Status status) {
 
         List<Task> tasks = ConvertsToArray(); //שליפה מה json
         boolean ok = false;
