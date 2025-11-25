@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskRepository {
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private final String FILE_PATH = "tasks.json";
+    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static String FILE_PATH = "tasks.json";
 
 
 // פונקצית עזר שממירה את קובץ ה json ומחזירה אותו כמערך
@@ -26,7 +26,7 @@ public class TaskRepository {
     }
 
 //    פונקצית עזר שממירה את המערך לקובץ json ןמכניסה אותו לקובץ
-    public void ConvertsToJson(List<Task> tasks) {
+    public static void ConvertsToJson(List<Task> tasks) {
         try (FileWriter writer = new FileWriter(FILE_PATH)) {
             gson.toJson(tasks, writer);
         } catch (IOException e) {
@@ -39,7 +39,7 @@ public class TaskRepository {
         List<Task> tasks = ConvertsToArray(); //שליפה מה json
         tasks.add(newTask); // הוספה
         ConvertsToJson(tasks); // החזרה ל json
-        System.out.println(newTask.getId() + "המשימה נוספה למערכת, id = " );
+        System.out.println(newTask.toString());
     }
 
     // פונקצית עדכון לפי Id
@@ -64,14 +64,14 @@ public class TaskRepository {
 
         if (ok) { // אם מצא id מעדכן לקובץ
             ConvertsToJson(tasks);
-            System.out.println(id + " found id");
+            getById(id);
         }
          else
             System.out.println(id + " not found id");
     }
 
     // פונקצית מחיקה לפי id
-    public void deleteById(int id) {
+    public static void deleteById(int id) {
 
         List<Task> tasks = ConvertsToArray(); //שליפה מה json
         boolean deleted = tasks.removeIf(task -> task.getId() == id);// מחיקת ה Id המרשימה
@@ -85,7 +85,7 @@ public class TaskRepository {
 
 
     // פונקצית הדפסה לפי id
-    public void getById(int id) {
+    public static void getById(int id) {
 
         List<Task> tasks = ConvertsToArray(); //שליפה מה json
         for (Task task : tasks) // מחפש את המשימה לפי Id
@@ -94,10 +94,16 @@ public class TaskRepository {
     }
 
     // מדפיסה את כל המשימות
-    public void listAll() {
-
+    public static void listAll() {
         List<Task> tasks = ConvertsToArray(); // שליפה מה-json
-        for (Task task : tasks) // עוברים בלולאה ומדפיסים
-            System.out.println(task.toString());
+        if (tasks.isEmpty())
+            System.out.println("אין משימות");
+        else {
+            System.out.println("--- רשימת משימות ---");
+            for (Task task : tasks) { // עוברת בלולאה על המשימות ושולחת לטוסטרינג
+                System.out.println(task.toString());
+            }
+            System.out.println("----------------------");
+        }
     }
 }

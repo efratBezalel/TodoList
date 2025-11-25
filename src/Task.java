@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Task implements Comparable<Task>{
 
     private static int nextId = 1; // משתנה סטטי
@@ -58,6 +60,7 @@ public class Task implements Comparable<Task>{
                 ", status=" + status +
                 '}';
     }
+
 
     // פונקציית עזר בשביל לקבוע מיון לפונקצייה הדורסת של קומפר תו
     public static int getNmber(Task task) {

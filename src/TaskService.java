@@ -22,7 +22,7 @@ public class TaskService {
 
         List<Task> tasks = TaskRepository.ConvertsToArray(); //שליפה מה json
 
-        // 3. שימוש ב-Stream לסינון והחזרה
+        // מבצע סינון ומחזיר רק את המשימות שעומדות בקריטריונים
         if (txt != null) {
             List<Task> results = tasks.stream()
                     .filter(task ->
@@ -30,8 +30,13 @@ public class TaskService {
                                     task.getDescription().contains(txt)
                     )
                     .collect(Collectors.toList());
-            printList(results);
-        }
+
+                System.out.println("--- רשימת משימות ---"); // הדפסת המשימות
+                for (Task task : tasks) { // עוברת בלולאה על המשימות ושולחת לטוסטרינג
+                    System.out.println(task.toString());
+                }
+                System.out.println("----------------------");
+            }
         else
             System.out.println("לא נמצאה מחרוזת מתאימה");
     }
