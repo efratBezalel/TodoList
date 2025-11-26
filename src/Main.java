@@ -43,7 +43,8 @@ public class Main {
                 case 5: TaskRepository.listAll();break;
                 case 6: TaskService.EndTask(); break;
                 case 7: TaskService.searchTask();break;
-                case 8: TaskService.getS8ortedTasks();break;
+                case 8: TaskService.getSortedTasks();break;
+                case 0: System.out.println("המערכת נסגרת, המשך יום נפלא!!"); break;
                 default: System.out.println("מספר לא תקין"); break;
             }
         }

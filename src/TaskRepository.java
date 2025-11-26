@@ -44,9 +44,9 @@ public class TaskRepository {
         List<Task> tasks = ConvertsToArray(); //שליפה מה json
 
         System.out.println("להוספת משימה חדשה, הזן כותרת:");
-        String ttl = in.next();
+        String ttl = in.nextLine();
         System.out.println("הזן תאור משימה:");
-        String dsc = in.next();
+        String dsc = in.nextLine();
 
         Task t = new Task(ttl, dsc); // קריאה לבנאי
         tasks.add(t); //  והוספה
@@ -71,9 +71,9 @@ public class TaskRepository {
             if (t.getId() == id) {
                 // האיפים הפנימים הם לבדיקה האם הכניסו ערך לעדכון או לא
                 // (אולי לא רצו לעדכן ולא שלחו בערך כלום).
-                if(!dsc.equals("לא"))
+                if(!dsc.equals("") && !dsc.equals("לא"))
                     t.setDescription(dsc);
-                if(!ttl.equals("לא"))
+                if(!ttl.equals("") && !ttl.equals("לא"))
                     t.setTitle(ttl);
                 if (s != null)
                 t.setStatus(s);
@@ -101,10 +101,11 @@ public class TaskRepository {
 
         System.out.println("הזן id אותו תרצה לשנות");
         int id = in.nextInt();
+        in.nextLine(); // כדי שאהיה אפשר להכניס קלט בשורה הבאה
         System.out.println("אם ברצונך לשנות את הכותרת כיתבי אותה כאן ולא כתבי לא:");
-        String ttl = in.next();
+        String ttl = in.nextLine();
         System.out.println("אם ברצונך לשנות את התאור כיתבי אותה כאן ולא כתבי לא:");
-        String dsc = in.next();
+        String dsc = in.nextLine();
         System.out.println("האם ברצונך לשנות את סטטוס הפעולה?");
         System.out.println("לשינוי הקש 1, להשארת המצב הקיים הקש 0");
         int status = in.nextInt();
@@ -141,9 +142,15 @@ public class TaskRepository {
     public static void getById(int id) {
         try {
             List<Task> tasks = ConvertsToArray(); //שליפה מה json
+
+            boolean ok = false; // משתנה עזר לדעת אם קיים Id או לא
             for (Task task : tasks) // מחפש את המשימה לפי Id
-                if (task.getId() == id) // אם מצא - מדפיס
+                if (task.getId() == id) {// אם מצא - מדפיס
                     System.out.println(task.toString());
+                    ok = true;
+                }
+            if(ok == false)
+                System.out.println("id לא נמצא");
         }
         catch (IOException e) {
             System.err.println(" שגיאה בקריאה לקובץ: " + e.getMessage());
@@ -216,7 +223,7 @@ public class TaskRepository {
         System.out.println("הקש את המספר הרצוי:");
         int a = in.nextInt();
 
-        while (a != 1 || a != 2 || a != 3)
+        while (a != 1 && a != 2 && a != 3)
             switch (a) {
                 case (1):
                     return Status.NEW;
