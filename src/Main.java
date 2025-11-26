@@ -38,16 +38,13 @@ public class Main {
             switch (a) {
                 case 1: TaskRepository.addTask(); break;
                 case 2: TaskRepository.updtTask(); break;
-                case 3: break;
-                case 4: break;
-                case 5: break;
-                case 6: break;
-                case 7: break;
-                case 8: break;
-                default:
-                    System.out.println("");
-
-                    break;
+                case 3: TaskRepository.deleteById(); break;
+                case 4: TaskRepository.getByIdBefore(); break;
+                case 5: TaskRepository.listAll();break;
+                case 6: TaskService.EndTask(); break;
+                case 7: TaskService.searchTask();break;
+                case 8: TaskService.getS8ortedTasks();break;
+                default: System.out.println("מספר לא תקין"); break;
             }
         }
     }

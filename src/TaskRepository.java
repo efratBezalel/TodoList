@@ -115,8 +115,10 @@ public class TaskRepository {
     }
 
     // פונקצית מחיקה לפי id
-    public static void deleteById(int id) {
+    public static void deleteById() {
         try {
+            System.out.println("הזן id אותו תרצה למחוק");
+            int id = in.nextInt();
             List<Task> tasks = ConvertsToArray(); //שליפה מה json
             boolean deleted = tasks.removeIf(task -> task.getId() == id);// מחיקת ה Id המרשימה
 
@@ -150,11 +152,29 @@ public class TaskRepository {
             System.err.println(" שגיאה" + e.getMessage());
         }
     }
+    // פונקצית עזר ל getById כדי שתתאים לעוד פונקציות
+    public static void getByIdBefore() {
+        System.out.println("הזן id אותו תרצה לראות");
+        int id = in.nextInt();
+        getById(id); // קריאה לפונקציה שמציגה את המשימה
+    }
 
     // מדפיסה את כל המשימות
     public static void listAll() {
         try{
-        List<Task> tasks = ConvertsToArray(); // שליפה מה-json
+            List<Task> tasks = ConvertsToArray(); // שליפה מה-json
+            printListAll(tasks);
+        }
+        catch (IOException e) {
+            System.err.println(" שגיאה בקריאה לקובץ: " + e.getMessage());
+        }
+        catch (Exception e) {
+            System.err.println(" שגיאה" + e.getMessage());
+        }
+    }
+
+    // פונקצית עזר להדפסת רשימה
+    public static void printListAll(List<Task> tasks){
         if (tasks.isEmpty())
             System.out.println("אין משימות");
         else {
@@ -163,13 +183,6 @@ public class TaskRepository {
                 System.out.println(task.toString());
             }
             System.out.println("----------------------");
-        }
-        }
-        catch (IOException e) {
-            System.err.println(" שגיאה בקריאה לקובץ: " + e.getMessage());
-        }
-        catch (Exception e) {
-            System.err.println(" שגיאה" + e.getMessage());
         }
     }
 
